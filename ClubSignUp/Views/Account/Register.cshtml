@@ -1,28 +1,64 @@
 ﻿@model ClubSignUp.Models.RegisterViewModel
 @{
     ViewBag.Title = "Register";
-}
+    }
 
 <h2>@ViewBag.Title.</h2>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+
+<link href="@Url.Content("~/Content/fullCalendar.css")" rel="stylesheet" type="text/css" />
+@using (Html.BeginForm("Register", "Account", FormMethod.Post,
+    new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     <h4>Create a new account.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Fname, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Fname, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Sname, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Sname, new { @class = "form-control" })
+        </div>
+    </div>
+
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
         </div>
     </div>
+
     <div class="form-group">
-        @Html.LabelFor(m => m.Hometown, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(model => model.Course, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Hometown, new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.Course,
+                 (IEnumerable<SelectListItem>)ViewBag.Programmes))
+            @Html.ValidationMessageFor(model => model.Course)
         </div>
-    </div>    
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Year, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Year, new { @class = "form-control" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+        </div>
+    </div>
+
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
@@ -35,6 +71,31 @@
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Club, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Club, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.DOB, new { @class = "col-md-2 control-label" })
+        <div class="col-lg-1">
+            @Html.TextBoxFor(m => m.DOB, new {@class = "datepicker" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PreferredPosition, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.PreferredPosition,
+                 (IEnumerable<SelectListItem>)ViewBag.Positions)) 
+        </div>
+    </div>
+    
+    @*<div id='calendar' style="width:65%"></div>*@
+
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-default" value="Register" />
@@ -42,6 +103,33 @@
     </div>
 }
 
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @*@Scripts.Render("~/Scripts/lib/jquery.min.js")
+    @Scripts.Render("~/Scripts/lib/moment.min.js")
+    @Scripts.Render("~/Scripts/fullcalendar.js")*@
+@Scripts.Render("~/Scripts/lib/moment.min.js")
+<script type="text/javascript">
+    //$(document).ready(function () {
+
+    //    // page is now ready, initialize the calendar...
+
+    //    $('#calendar').fullCalendar({
+    //        // put your options and callbacks here
+    //    })
+    //});
+    //var datepicker = $.fn.datepicker.noConflict(); // return $.fn.datepicker to previously assigned value
+    //$.fn.bootstrapDP = datepicker;                 // give $().bootstrapDP the bootstrap-datepicker functionality
+    $(document).ready(function () { // will trigger when the document is ready
+        $('.datepicker').datepicker(
+            {
+                widgetParent:'DOB',
+                format: '/dd/mm/yyyy',
+                inline: true
+            }); //Initialise any date pickers
+    });
+
+</script>
 }
+

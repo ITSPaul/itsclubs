@@ -5,6 +5,19 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClubSignUp", "ClubSignUp\ClubSignUp.csproj", "{44E196D0-7B03-4E16-94B3-89124C14D21E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{66C5B794-805B-45C9-97A5-0B82D644E48A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{654E745F-444B-495B-BA87-BB793902DACF}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Scripts\Deploy-AzureResourceGroup.ps1 = PublishScripts\Scripts\Deploy-AzureResourceGroup.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{2FFDB7D4-A6D3-4CAE-AB97-AD200DA7BD41}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Templates\ClubSignUp.json = PublishScripts\Templates\ClubSignUp.json
+		PublishScripts\Templates\ClubSignUp.param.dev.json = PublishScripts\Templates\ClubSignUp.param.dev.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +31,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{654E745F-444B-495B-BA87-BB793902DACF} = {66C5B794-805B-45C9-97A5-0B82D644E48A}
+		{2FFDB7D4-A6D3-4CAE-AB97-AD200DA7BD41} = {66C5B794-805B-45C9-97A5-0B82D644E48A}
 	EndGlobalSection
 EndGlobal

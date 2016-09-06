@@ -78,6 +78,11 @@ namespace ClubSignUp.Models
         public string PhoneNumber { get; set; }
     }
 
+    public class DropdownProgramme
+    {
+        public ICollection<Programme> Programmes { get; set; }
+    }
+
     public class ConfigureTwoFactorViewModel
     {
         public string SelectedProvider { get; set; }

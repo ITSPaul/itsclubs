@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ClubSignUp.Models;
+using System.Configuration;
+using System.Collections.Generic;
 
 namespace ClubSignUp.Controllers
 {
@@ -17,6 +19,7 @@ namespace ClubSignUp.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
 
         public AccountController()
         {
@@ -151,6 +154,32 @@ namespace ClubSignUp.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                List<SelectListItem> items = new List<SelectListItem>();
+                var programmes = db.Programmes.ToList();
+                foreach (var item in programmes)
+                {
+                    items.Add(new SelectListItem()
+                    { Value = item.ProgrammeCode, Text = item.ProgrammeName });
+                }
+                ViewBag.Programmes = items;
+                ViewBag.Positions = new List<SelectListItem>
+                {
+                    new SelectListItem() { Text = "Goal Keeper", Value = "Goal Keeper" },
+                    new SelectListItem() { Text = "Left Back", Value = "Left Back" },
+                    new SelectListItem() { Text = "Right Back", Value = "Right Back" },
+                    new SelectListItem() { Text = "Right Back", Value = "Right Back" },
+                    new SelectListItem() { Text = "Centre Mid", Value = "Centre Mid" },
+                    new SelectListItem() { Text = "Attacking Mid", Value = "Attacking Mid" },
+                    new SelectListItem() { Text = "Defence Mid", Value = "Defence Mid" },
+                    new SelectListItem() { Text = "Left Mid", Value = "Left Mid" },
+                    new SelectListItem() { Text = "Right Mid", Value = "Right Mid" },
+                    new SelectListItem() { Text = "Centre Forward", Value = "Centre Forward" },
+
+                };
+            }
+            
             return View();
         }
 
@@ -161,9 +190,28 @@ namespace ClubSignUp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            string emaildomain = ConfigurationManager.AppSettings["email:Domain"];
+            string match = "^([a-zA-Z0-9_\\-\\.]+)" + emaildomain;
+
+            if (model.Email == null ||
+                !System.Text.RegularExpressions.Regex.IsMatch(model.Email, match))
+            {
+                ModelState.AddModelError("Invalid Email", "Email Must end in " + emaildomain);
+            }
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Hometown = model.Hometown };
+                var user = new ApplicationUser {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Fname = model.Fname,
+                    Sname = model.Sname,
+                    Year = model.Year,
+                    Course = model.Course,
+                    Club = model.Club,
+                    DOB= model.DOB,
+                    PhoneNumber = model.PhoneNumber,
+                    PreferredPosition = model.PreferredPosition};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -171,9 +219,9 @@ namespace ClubSignUp.Controllers
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -379,7 +427,7 @@ namespace ClubSignUp.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Hometown = model.Hometown };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email};
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

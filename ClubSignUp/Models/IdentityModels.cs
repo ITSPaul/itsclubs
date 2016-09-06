@@ -3,13 +3,22 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 
 namespace ClubSignUp.Models
 {
+   
+
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-        public string Hometown { get; set; }
+        public string Club { get; set; }
+        public string Fname { get; set; }
+        public string Sname { get; set; }
+        public string PreferredPosition { get; set; }
+        public DateTime DOB { get; set; }
+        public string Course { get; set; }
+        public int Year { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -26,6 +35,7 @@ namespace ClubSignUp.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+        public virtual DbSet<Programme> Programmes { get; set; }
 
         public static ApplicationDbContext Create()
         {
