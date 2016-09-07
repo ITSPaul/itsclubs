@@ -81,12 +81,12 @@
 
     <div>
         @Html.LabelFor(m => m.DOB, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.DOB, new {@class = "datepicker" })
+        <div class="col-md-10 datepicker-dropdown" >
+            @Html.TextBoxFor(m => m.DOB, new {@class = "datepicker-dropdown" })
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group ">
         @Html.LabelFor(m => m.PreferredPosition, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.DropDownListFor(model => model.PreferredPosition,
@@ -104,9 +104,9 @@
 
 }
 
-<div style="width:65%">
+@*<div style="width:65%">
     <input name="calendar" id="calendar" class="datepicker" />
-</div>
+</div>*@
 
 
 @section Scripts {
@@ -127,10 +127,10 @@
     //var datepicker = $.fn.datepicker.noConflict(); // return $.fn.datepicker to previously assigned value
     //$.fn.bootstrapDP = datepicker;                 // give $().bootstrapDP the bootstrap-datepicker functionality
     $(document).ready(function () { // will trigger when the document is ready
-        $('.datepicker').datepicker(
+        $('.datepicker-dropdown').datepicker(
             {
-                widgetParent:'calendar',
-                format: '/dd/mm/yyyy',
+                widgetParent:'DOB',
+                format: 'dd/mm/yyyy',
                 inline: true
             }); //Initialise any date pickers
     });

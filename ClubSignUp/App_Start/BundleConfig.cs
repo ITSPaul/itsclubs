@@ -20,6 +20,11 @@ namespace ClubSignUp
                 "~/Scripts/jquery.unobtrusive*",
                 "~/Scripts/jquery.validate*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/combodate").Include(
+                "~/Scripts/combodate-1.0.7/combodate.js",
+                "~/Scripts/lib/moment.min.js"
+                ));
+
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                 "~/Scripts/knockout-{version}.js",
                 "~/Scripts/knockout.validation.js"));
@@ -44,7 +49,7 @@ namespace ClubSignUp
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                  "~/Content/bootstrap.css",
-                  "~/Content/bootstrap-datepicker.css",  // ** NEW for Bootstrap Datepicker
+                  "~/Content/bootstrap-datepicker3.css",  // ** NEW for Bootstrap Datepicker
                  "~/Content/Site.css"));
         }
     }

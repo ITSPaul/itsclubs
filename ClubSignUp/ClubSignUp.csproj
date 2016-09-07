@@ -328,6 +328,7 @@
     <Content Include="Content\bootstrap-datepicker.css.map" />
     <None Include="Properties\PublishProfiles\ClubSignUp.pubxml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
+    <Content Include="Scripts\combodate-1.0.7\combodate.js" />
     <Content Include="Scripts\fullcalendar.js" />
     <Content Include="Scripts\fullcalendar.min.js" />
     <Content Include="Scripts\gcal.js" />
