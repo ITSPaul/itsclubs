@@ -81,7 +81,7 @@
 
     <div>
         @Html.LabelFor(m => m.DOB, new { @class = "col-md-2 control-label" })
-        <div class="col-lg-1">
+        <div class="col-md-10">
             @Html.TextBoxFor(m => m.DOB, new {@class = "datepicker" })
         </div>
     </div>
@@ -94,14 +94,19 @@
         </div>
     </div>
     
-    @*<div id='calendar' style="width:65%"></div>*@
-
+    
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-default" value="Register" />
         </div>
     </div>
+
+
 }
+
+<div style="width:65%">
+    <input name="calendar" id="calendar" class="datepicker" />
+</div>
 
 
 @section Scripts {
@@ -124,7 +129,7 @@
     $(document).ready(function () { // will trigger when the document is ready
         $('.datepicker').datepicker(
             {
-                widgetParent:'DOB',
+                widgetParent:'calendar',
                 format: '/dd/mm/yyyy',
                 inline: true
             }); //Initialise any date pickers
