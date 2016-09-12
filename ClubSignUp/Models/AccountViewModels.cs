@@ -81,7 +81,8 @@ namespace ClubSignUp.Models
         public string Sname { get; set; }
 
         [Required]
-        [Display(Name = "College ID")]
+        [Display(Name = "College ID", Prompt ="Enter your College ID (S00.....)")]
+        [RegularExpression(@"^[S|s]\d{8}$",ErrorMessage = "College ID must start with an S followed by 8 digits")]
         public string Sid { get; set; }
 
 
@@ -100,7 +101,7 @@ namespace ClubSignUp.Models
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
+        [DataType(DataType.Password,ErrorMessage ="Password must be have letters and at least one number ")]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
@@ -109,7 +110,7 @@ namespace ClubSignUp.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        
         [Display(Name = "Club Last Played For")]
         public string Club { get; set; }
 
@@ -118,12 +119,13 @@ namespace ClubSignUp.Models
         public string PreferredPosition { get; set; }
 
         [Required]
-        [Display(Name = "Date Of Birth")]
-        [DataType(DataType.Date)]
+        [Display(Name = "Date Of Birth (dd/mm/yyyy)")]
+        [DataType(DataType.Date,ErrorMessage ="Date of Birth must be in the format dd/mm/yyyy")]
         public DateTime DOB { get; set; }
 
-        [Display(Name = "Contact Number")]
+        [Display(Name = "Mobile Number Irish Only E.G. 086-1234567")]
         [Phone]
+        [RegularExpression(@"^08[35679]-\d{7}$",ErrorMessage = "Only Republic of Ireland Mobile Contact Numbers allowed")]
         public string PhoneNumber { get; set; }
 
         public virtual ICollection<Programme> Programmes { get; set; }
