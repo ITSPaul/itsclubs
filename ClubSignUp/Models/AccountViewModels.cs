@@ -81,6 +81,11 @@ namespace ClubSignUp.Models
         public string Sname { get; set; }
 
         [Required]
+        [Display(Name = "College ID")]
+        public string Sid { get; set; }
+
+
+        [Required]
         [EmailAddress]
         [Display(Name = "IT Sligo Email",Prompt ="Enter your College ID (S00.....) followed by @mail.itsligo.ie")]
         public string Email { get; set; }

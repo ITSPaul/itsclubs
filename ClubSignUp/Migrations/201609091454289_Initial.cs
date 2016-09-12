@@ -7,6 +7,7 @@ namespace ClubSignUp.Migrations
     {
         public override void Up()
         {
+            
             CreateTable(
                 "dbo.AspNetRoles",
                 c => new
@@ -36,10 +37,13 @@ namespace ClubSignUp.Migrations
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Club = c.String(),
+                        Sid = c.String(),
                         Fname = c.String(),
                         Sname = c.String(),
                         PreferredPosition = c.String(),
                         DOB = c.DateTime(nullable: false),
+                        Course = c.String(),
+                        Year = c.Int(nullable: false),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),

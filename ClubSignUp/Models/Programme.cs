@@ -8,12 +8,8 @@ using System.Web;
 namespace ClubSignUp.Models
 {
     [Table("Programme")]
-    public partial class Programme
+    public class Programme
     {
-        public Programme()
-        {
-            
-        }
 
         [Key]
         [StringLength(50)]
@@ -21,11 +17,5 @@ namespace ClubSignUp.Models
 
         public string ProgrammeName { get; set; }
 
-
-        //public virtual Department department { get; set; }
-
-        //public virtual ICollection<AcademicYearProgramme> academicProgrammeYears { get; set; }
-
-        //public virtual ICollection<ProgrammeStage> programmeStages { get; set; }
     }
 }

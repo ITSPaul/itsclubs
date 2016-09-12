@@ -7,13 +7,13 @@ namespace ClubSignUp.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class ProgrammeAdded : IMigrationMetadata
+    public sealed partial class Initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ProgrammeAdded));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201609060845473_Programme Added"; }
+            get { return "201609091454289_Initial"; }
         }
         
         string IMigrationMetadata.Source

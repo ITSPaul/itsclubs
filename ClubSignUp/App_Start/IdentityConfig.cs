@@ -1,28 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using ClubSignUp.Models;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System.Configuration;
 
 namespace ClubSignUp
 {
     public class EmailService : IIdentityMessageService
     {
-        public Task SendAsync(IdentityMessage message)
+        public async Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            await Execute(message);
+        }
+        static async Task Execute(IdentityMessage message)
+        {
+            string apiKey = ConfigurationManager.AppSettings["SGAPIKEY"];
+            dynamic sg = new SendGridAPIClient(apiKey);
+            Email from = new Email("powell.paul@itsligo.ie");
+            string subject = "Confirm Email address";
+            Email to = new Email(message.Destination);
+            Content content = new Content("text/html", message.Body);
+            Mail mail = new Mail(from, subject, to, content);
+            dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
         }
     }
-
+    
     public class SmsService : IIdentityMessageService
     {
         public Task SendAsync(IdentityMessage message)

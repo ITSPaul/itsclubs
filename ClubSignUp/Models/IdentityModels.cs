@@ -11,8 +11,9 @@ namespace ClubSignUp.Models
 
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
-    {
+    {   
         public string Club { get; set; }
+        public string Sid { get; set; }
         public string Fname { get; set; }
         public string Sname { get; set; }
         public string PreferredPosition { get; set; }
@@ -34,12 +35,13 @@ namespace ClubSignUp.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
-        public virtual DbSet<Programme> Programmes { get; set; }
-
         public static ApplicationDbContext Create()
         {
+
             return new ApplicationDbContext();
         }
+
     }
 }

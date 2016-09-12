@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -11,6 +10,9 @@ using Microsoft.Owin.Security;
 using ClubSignUp.Models;
 using System.Configuration;
 using System.Collections.Generic;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System.Threading;
 
 namespace ClubSignUp.Controllers
 {
@@ -154,18 +156,31 @@ namespace ClubSignUp.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            //FillRegistrationViewBag();
+            ViewBag.EmailDomain = ConfigurationManager.AppSettings["email:Domain"];
+            ViewBag.Positions = Positions;
+            ViewBag.Programmes = FillProgrammes();
+            return View();
+        }
+
+        private static List<SelectListItem> FillProgrammes()
+        {
+            List<SelectListItem> items = new List<SelectListItem>();    
+            using (
+            ClubModels db = new ClubModels())
             {
-                List<SelectListItem> items = new List<SelectListItem>();
                 var programmes = db.Programmes.ToList();
                 foreach (var item in programmes)
                 {
                     items.Add(new SelectListItem()
                     { Value = item.ProgrammeCode, Text = item.ProgrammeName });
                 }
-                ViewBag.Programmes = items;
-                ViewBag.Positions = new List<SelectListItem>
-                {
+            }
+            return items;
+        }
+
+        private List<SelectListItem> Positions {
+            get { return new List<SelectListItem>() {
                     new SelectListItem() { Text = "Goal Keeper", Value = "Goal Keeper" },
                     new SelectListItem() { Text = "Left Back", Value = "Left Back" },
                     new SelectListItem() { Text = "Right Back", Value = "Right Back" },
@@ -176,11 +191,8 @@ namespace ClubSignUp.Controllers
                     new SelectListItem() { Text = "Left Mid", Value = "Left Mid" },
                     new SelectListItem() { Text = "Right Mid", Value = "Right Mid" },
                     new SelectListItem() { Text = "Centre Forward", Value = "Centre Forward" },
-
-                };
+                    };
             }
-            
-            return View();
         }
 
         //
@@ -191,7 +203,10 @@ namespace ClubSignUp.Controllers
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             string emaildomain = ConfigurationManager.AppSettings["email:Domain"];
-            string match = "^([a-zA-Z0-9_\\-\\.]+)" + emaildomain;
+            string match = "^([a-zA-Z0-9_\\-\\.]+)" + emaildomain; // General Test
+            // string match = "^S[0-9]{8,8}" + emaildomain; // More Specific IT Sligo email.
+            string SID_Match = "^S[0-9]{8,8}";
+            
 
             if (model.Email == null ||
                 !System.Text.RegularExpressions.Regex.IsMatch(model.Email, match))
@@ -199,9 +214,17 @@ namespace ClubSignUp.Controllers
                 ModelState.AddModelError("Invalid Email", "Email Must end in " + emaildomain);
             }
 
+            if(model.Sid == null || 
+                !System.Text.RegularExpressions.Regex.IsMatch(model.Sid.ToUpperInvariant(), SID_Match))
+            {
+                // s00130835
+                ModelState.AddModelError("Invalid Student ID" + model.Sid, "Must start with S and have 8 digits" );
+            }
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser {
+                    Sid = model.Sid,
                     UserName = model.Email,
                     Email = model.Email,
                     Fname = model.Fname,
@@ -215,21 +238,37 @@ namespace ClubSignUp.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                    //await sgEmail(callbackUrl, model.Email);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
+            ViewBag.EmailDomain = ConfigurationManager.AppSettings["email:Domain"];
+            ViewBag.Positions = Positions;
+            ViewBag.Programmes = FillProgrammes();
             return View(model);
+        }
+
+        static async Task sgEmail(string message, string addressee)
+        {
+            string apiKey = ConfigurationManager.AppSettings["SGAPIKEY"];
+            dynamic sg = new SendGridAPIClient(apiKey);
+
+            Email from = new Email("itssoccer@itsligo.ie");
+            string subject = "Confirm Email address";
+            Email to = new Email(addressee);
+            Content content = new Content("text/html", message);
+            Mail mail = new Mail(from, subject, to, content);
+            dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
         }
 
         //

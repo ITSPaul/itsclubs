@@ -1,9 +1,9 @@
-namespace ClubSignUp.Migrations
+namespace ClubSignUp.Migrations.ClubModelMigrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class ProgrammeAdded : DbMigration
+    public partial class InitialiseClubsContext : DbMigration
     {
         public override void Up()
         {
