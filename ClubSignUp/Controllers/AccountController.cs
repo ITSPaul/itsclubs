@@ -213,8 +213,6 @@ namespace ClubSignUp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            // Make sure its "Sxxxxxxxx"
-            model.Sid = model.Sid.ToUpperInvariant();
             // Leave this one here as it is related to a setting.
             string emaildomain = ConfigurationManager.AppSettings["email:Domain"];
             string match = "^([a-zA-Z0-9_\\-\\.]+)" + emaildomain; // General Test
@@ -244,7 +242,7 @@ namespace ClubSignUp.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser {
-                    Sid = model.Sid,
+                    Sid = model.Sid.ToUpperInvariant(),
                     UserName = model.Email,
                     Email = model.Email,
                     Fname = model.Fname,
