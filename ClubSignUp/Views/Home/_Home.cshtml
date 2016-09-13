@@ -1,32 +1,37 @@
 ﻿<!-- ko with: home -->
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <h1>IT Sligo Clubs</h1>
+    <p class="lead">Registration system</p>
 </div>
 <div class="row">
     <div class="col-md-4">
         <h2>Your information</h2>
-        <p>This section shows how you can call ASP.NET Web API to get the user details.</p>
-        <p data-bind="text: myHometown"></p>
-       
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=273732">Learn more &raquo;</a></p>
+        <p></p>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div>
+                <label>Welcome @User.Identity.Name. For now just log off again and we'll be in touch</label>
+            </div>
+        }
+        else
+        {
+            <div>
+                <label>Welcome. You need to Login</label>
+            </div>
+        }
+
+        
     </div>
 
     <div class="col-md-4">
-        <h2>Getting started</h2>
+        <h2>This Site</h2>
         <p>
-            ASP.NET Single Page Application (SPA) helps you build applications that include significant client-side interactions using HTML, CSS, and JavaScript.
-            It's now easier than ever before to getting started writing highly interactive web applications.
+            This site is in beta mode. It is only used to capture member details for trials at the moment.
+            The eventual system will show club events and message on a Calendar.
         </p>
         <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=273732">Learn more &raquo;</a></p>
     </div>
 
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
 </div>
 
 <!-- /ko -->
