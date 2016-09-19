@@ -43,5 +43,6 @@ namespace ClubSignUp.Models
             return new ApplicationDbContext();
         }
 
+        
     }
 }

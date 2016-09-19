@@ -69,6 +69,8 @@ namespace ClubSignUp.Controllers
             return new EmptyResult();
         }
 
+       
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -256,6 +258,8 @@ namespace ClubSignUp.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    // Assign Role of student
+                    await UserManager.AddToRoleAsync(user.Id, "Student");
                     //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -267,6 +271,7 @@ namespace ClubSignUp.Controllers
 
                     return View("Info");
                     //return RedirectToAction("Index", "Home");
+                    
                 }
                 AddErrors(result);
             }

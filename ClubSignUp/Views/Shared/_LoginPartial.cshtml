@@ -8,6 +8,10 @@
     <ul class="nav navbar-nav navbar-right">
         <li>
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage" })
+            @if (User.IsInRole("Admin") || User.IsInRole("ClubAdmin"))
+            {
+                @Html.ActionLink("Player List", "Index", "Admin", routeValues: new { area = "" }, htmlAttributes: new { title = "Player List" })
+            }
         </li>
         <li><a href="javascript:sessionStorage.removeItem('accessToken');$('#logoutForm').submit();">Log off</a></li>
     </ul>

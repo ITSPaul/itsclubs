@@ -12,12 +12,12 @@ namespace ClubSignUp.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            //AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(ClubSignUp.Models.ApplicationDbContext context)
         {
-            AutomaticMigrationsEnabled = false;
+            //AutomaticMigrationsEnabled = false;
             MigrationsDirectory = @"Migrations";
             //  This method will be called after migrating to the latest version.
 
@@ -38,7 +38,12 @@ namespace ClubSignUp.Migrations
                 roleManager.Create(new IdentityRole { Name = "Admin" });
             if (roleManager.FindByName("Student") == null)
                 roleManager.Create(new IdentityRole { Name = "Student" });
-            if(manager != null)
+            if (roleManager.FindByName("ClubAdmin") == null)
+                roleManager.Create(new IdentityRole { Name = "ClubAdmin" });
+
+            PasswordHasher phash = new PasswordHasher();
+
+            if (manager != null)
             {
                 if (manager.FindByEmail("powell.paul@itsligo.ie") == null)
                 {
@@ -50,21 +55,100 @@ namespace ClubSignUp.Migrations
                         EmailConfirmed = true,
                         Fname = "Paul",
                         Sname = "Powell",
-                        PreferredPosition = "Centre Forward",
+                        PreferredPosition = "",
                         DOB = new DateTime(1965, 10, 26),
-                        Course = "staff",
-                        Club = "admin",
+                        Course = "NA",
+                        Club = "NA",
                         Year = 0,
+                        PasswordHash = phash.HashPassword("ppowell$1"),
+                        SecurityStamp = Guid.NewGuid().ToString()
+
+                    };
+                    context.Users.AddOrUpdate(Adminuser);
+                }
+                if (manager.FindByEmail("mullin.emma@itsligo.ie") == null)
+                {
+                    var clubAdmin1 = new ApplicationUser()
+                    {
+                        Sid = "emullin",
+                        UserName = "mullin.emma@itsligo.ie",
+                        Email = "mullin.emma@itsligo.ie",
+                        EmailConfirmed = true,
+                        Fname = "Emma",
+                        Sname = "Mullin",
+                        PreferredPosition = "NA",
+                        DOB = new DateTime(1900, 01, 01),
+                        Course = "NA",
+                        Club = "NA",
+                        Year = 0,
+                        PasswordHash = phash.HashPassword("emullin$1"),
                         SecurityStamp = Guid.NewGuid().ToString()
                     };
-
-                    context.Users.AddOrUpdate(Adminuser);
-                    context.SaveChanges();
+                    context.Users.AddOrUpdate(clubAdmin1);
                 }
+                if (manager.FindByEmail("ciarankellysocceracademy@gmail.com") == null)
+                {
+                    var clubAdmin2 = new ApplicationUser()
+                    {
+                        Sid = "ckelly",
+                        UserName = "ciarankellysocceracademy@gmail.com",
+                        Email = "ciarankellysocceracademy@gmail.com",
+                        EmailConfirmed = true,
+                        Fname = "Ciaran",
+                        Sname = "Kelly",
+                        PreferredPosition = "NA",
+                        DOB = new DateTime(1900, 01, 01),
+                        Course = "NA",
+                        Club = "NA",
+                        Year = 0,
+                        PasswordHash = phash.HashPassword("ckelly$1"),
+                        SecurityStamp = Guid.NewGuid().ToString()
+                    };
+                    context.Users.AddOrUpdate(clubAdmin2);
+                }
+                if (manager.FindByEmail("colinfeehilysrfc@hotmail.com") == null)
+                {
+                    var clubAdmin3 = new ApplicationUser()
+                    {
+                        Sid = "cfeehily",
+                        UserName = "colinfeehilysrfc@hotmail.com",
+                        Email = "colinfeehilysrfc@hotmail.com",
+                        EmailConfirmed = true,
+                        Fname = "Colin",
+                        Sname = "Feehily",
+                        PreferredPosition = "NA",
+                        DOB = new DateTime(1900, 01, 01),
+                        Course = "NA",
+                        Club = "NA",
+                        Year = 0,
+                        PasswordHash = phash.HashPassword("cfeehily$1"),
+                        SecurityStamp = Guid.NewGuid().ToString()
+                    };
+                    context.Users.AddOrUpdate(clubAdmin3);
+                }
+
+                context.SaveChanges();
+            }
+
+
             var adminUser2 = manager.FindByEmail("powell.paul@itsligo.ie");
             if (adminUser2 != null)
                 manager.AddToRoles(adminUser2.Id, new string[] { "Admin" });
-            }
+
+            ApplicationUser clubAdminRole;
+            clubAdminRole = manager.FindByEmail("mullin.emma@itsligo.ie");
+            if (clubAdminRole != null)
+                manager.AddToRoles(clubAdminRole.Id, new string[] { "ClubAdmin" });
+
+            clubAdminRole = manager.FindByEmail("ciarankellysocceracademy@gmail.com");
+            if (clubAdminRole != null)
+                manager.AddToRoles(clubAdminRole.Id, new string[] { "ClubAdmin" });
+            //colinfeehilysrfc @hotmail.com
+            clubAdminRole = manager.FindByEmail("colinfeehilysrfc @hotmail.com");
+            if (clubAdminRole != null)
+                manager.AddToRoles(clubAdminRole.Id, new string[] { "ClubAdmin" });
+
+
 
         }
     }
