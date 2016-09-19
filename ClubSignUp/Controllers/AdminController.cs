@@ -73,11 +73,9 @@ namespace ClubSignUp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IdentityRole studentRole = db.Roles.Where(r => r.Name == "Student").Single();
 
             var applicationUser =  
                 (await db.Users.Where(u => u.Id == id)
-                .Where(u => u.Roles.Single().RoleId == studentRole.Id)
                 .ToListAsync()).First();
             if (applicationUser == null)
             {
@@ -86,29 +84,7 @@ namespace ClubSignUp.Controllers
             return View(applicationUser);
         }
 
-        // GET: Admin/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Admin/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Club,Sid,Fname,Sname,PreferredPosition,DOB,Course,Year,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Users.Add(applicationUser);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-
-            return View(applicationUser);
-        }
-
+        
         // GET: Admin/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
