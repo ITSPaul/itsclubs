@@ -61,6 +61,7 @@ namespace ClubSignUp.Controllers
                          from ur in u.Roles
                          join r in db.Roles on ur.RoleId equals r.Id
                          where r.Name.Equals("Student")
+                         orderby u.PreferredPosition
                          select u);
 
             return View(await users.ToListAsync());
