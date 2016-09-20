@@ -20,6 +20,7 @@ namespace ClubSignUp.Models
         public DateTime DOB { get; set; }
         public string Course { get; set; }
         public int Year { get; set; }
+        public DateTime SignupDate { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

@@ -254,7 +254,9 @@ namespace ClubSignUp.Controllers
                     Club = model.Club,
                     DOB= model.DOB,
                     PhoneNumber = model.PhoneNumber,
-                    PreferredPosition = model.PreferredPosition};
+                    SignupDate = DateTime.Now,
+                    PreferredPosition = model.PreferredPosition
+                    };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

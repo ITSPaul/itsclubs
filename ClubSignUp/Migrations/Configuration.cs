@@ -61,6 +61,7 @@ namespace ClubSignUp.Migrations
                         Club = "NA",
                         Year = 0,
                         PasswordHash = phash.HashPassword("ppowell$1"),
+                        SignupDate = DateTime.Now,
                         SecurityStamp = Guid.NewGuid().ToString()
 
                     };
@@ -82,6 +83,7 @@ namespace ClubSignUp.Migrations
                         Club = "NA",
                         Year = 0,
                         PasswordHash = phash.HashPassword("emullin$1"),
+                        SignupDate = DateTime.Now,
                         SecurityStamp = Guid.NewGuid().ToString()
                     };
                     context.Users.AddOrUpdate(clubAdmin1);
@@ -102,6 +104,7 @@ namespace ClubSignUp.Migrations
                         Club = "NA",
                         Year = 0,
                         PasswordHash = phash.HashPassword("ckelly$1"),
+                        SignupDate = DateTime.Now,
                         SecurityStamp = Guid.NewGuid().ToString()
                     };
                     context.Users.AddOrUpdate(clubAdmin2);
@@ -122,6 +125,7 @@ namespace ClubSignUp.Migrations
                         Club = "NA",
                         Year = 0,
                         PasswordHash = phash.HashPassword("cfeehily$1"),
+                        SignupDate = DateTime.Now,
                         SecurityStamp = Guid.NewGuid().ToString()
                     };
                     context.Users.AddOrUpdate(clubAdmin3);
