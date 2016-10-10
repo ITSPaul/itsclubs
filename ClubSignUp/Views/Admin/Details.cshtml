@@ -1,4 +1,5 @@
-﻿@model ClubSignUp.Models.ApplicationUser
+﻿@using Microsoft.AspNet.Identity
+@model ClubSignUp.Models.ApplicationUser
 
 @{
     ViewBag.Title = "Details";
@@ -7,7 +8,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>ApplicationUser</h4>
+    <h4>Players</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -67,6 +68,15 @@
         </dd>
 
         <dt>
+            Course Name
+        </dt>
+
+        <dd>
+                 @ViewBag.ProgrammeName
+       </dd>
+
+
+        <dt>
             @Html.DisplayNameFor(model => model.Year)
         </dt>
 
@@ -91,10 +101,30 @@
             @Html.DisplayFor(model => model.PhoneNumber)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.SignupDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SignupDate)
+        </dd>
+
 
     </dl>
 </div>
 <p>
-    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
+@if (Request.IsAuthenticated)
+{
+    if (User.IsInRole("ClubAdmin") || User.IsInRole("Admin"))
+    {
+            @Html.ActionLink("Edit | ", "Edit", new { id = Model.Id });
+    }
+    if (User.IsInRole("Admin"))
+    {
+            @Html.ActionLink(" Delete | ", "Delete", new { id = Model.Id });
+    }
+
+}
+
     @Html.ActionLink("Back to List", "Index")
 </p>

@@ -12,20 +12,23 @@ namespace ClubSignUp.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id;
-        public string TeamName;
-
+        public int Id { get; set; }
+        public TEAMASSIGNMENT TeamType { get; set; }
+        public string description { get; set; }
     }
+
+
 
     [Table("TeamMember")]
     public class TeamMember
     {
         [Key]
         [Column(Order =1)]
-        public int TeamId;
+        public int TeamId { get; set; }
         [Key]
         [Column(Order = 2)]
-        string ApplicationUserID;
+        public string ApplicationUserID { get; set; }
+
 
     }
 

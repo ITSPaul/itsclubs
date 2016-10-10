@@ -20,5 +20,7 @@ namespace ClubSignUp.Models
         }
 
         public virtual DbSet<Programme> Programmes { get; set; }
+        public virtual DbSet<TeamPanel> Teams { get; set; }
+        public virtual DbSet<TeamMember> TeamMembers { get; set; }
     }
 }

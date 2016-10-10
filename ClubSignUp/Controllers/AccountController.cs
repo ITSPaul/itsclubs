@@ -240,7 +240,10 @@ namespace ClubSignUp.Controllers
 
             //if (stub != model.Sid)
             //    ModelState.AddModelError("Error in email field" + model.Email, "Email stub must match Sid field" + model.Sid);
-
+            if(UserManager.FindByEmail(model.Email) != null)
+            {
+                ModelState.AddModelError("You have previously registered with " + model.Email, "You are Already Registered" );
+            }
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser {

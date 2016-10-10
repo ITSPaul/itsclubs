@@ -1,9 +1,10 @@
-﻿using System;
+﻿using System;   
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ClubSignUp.Models
 {
+
     // Models returned by AccountController actions.
     public class ExternalLoginConfirmationViewModel
     {

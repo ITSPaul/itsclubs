@@ -50,6 +50,7 @@ namespace ClubSignUp.Controllers
             }
         }
         private ApplicationDbContext db = new ApplicationDbContext();
+        private ClubModels clubs = new ClubModels();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -61,7 +62,19 @@ namespace ClubSignUp.Controllers
                          from ur in u.Roles
                          join r in db.Roles on ur.RoleId equals r.Id
                          where r.Name.Equals("Student")
-                         orderby u.PreferredPosition
+                         orderby u.Sname, u.Fname
+                         select u);
+
+            return View(await users.ToListAsync());
+        }
+
+        public async Task<ActionResult> ViewByDate()
+        {
+            var users = (from u in db.Users
+                         from ur in u.Roles
+                         join r in db.Roles on ur.RoleId equals r.Id
+                         where r.Name.Equals("Student")
+                         orderby u.SignupDate descending
                          select u);
 
             return View(await users.ToListAsync());
@@ -75,13 +88,18 @@ namespace ClubSignUp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            
             var applicationUser =  
                 (await db.Users.Where(u => u.Id == id)
                 .ToListAsync()).First();
+
+
             if (applicationUser == null)
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ProgrammeName = clubs.Programmes.FirstOrDefault(p => p.ProgrammeCode == applicationUser.Course).ProgrammeName;
             return View(applicationUser);
         }
 
