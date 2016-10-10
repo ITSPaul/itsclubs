@@ -78,7 +78,7 @@ namespace ClubSignUp.Models
         public string Fname { get; set; }
 
         [Required]
-        [Display(Name = "Surname")]
+        [Display(Name = "Second Name")]
         public string Sname { get; set; }
 
         [Required]
