@@ -9,7 +9,8 @@ namespace ClubSignUp.Models.ViewModels
 
     public class AssignViewModel
     {
-
+        [Required]
+        [Display(Name = "User ID")]
         public string ApplicationUserID { get; set; }
 
         [Required]
@@ -24,6 +25,8 @@ namespace ClubSignUp.Models.ViewModels
         [Display(Name = "Surname")]
         public string Sname { get; set; }
 
+        [Required]
+        [Display(Name = "Team Assigned to")]
         public TEAMASSIGNMENT Assigned { get; set; }
 
     }

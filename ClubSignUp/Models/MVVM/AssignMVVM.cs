@@ -11,13 +11,25 @@ namespace ClubSignUp.Models.ViewModels
 
         public List<AssignViewModel> GetAssignees()
         {
+            ClubModels clbModel = new ClubModels();
+            // Find all the members assigned so far
+            List<string> ExistingMemberIDs = clbModel.TeamMembers.Select(m => m.ApplicationUserID).ToList();
+
             List<AssignViewModel> assignees = new List<AssignViewModel>();
+            // don't hog the application db context
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                foreach (var assignee in db.Users )
+                // Find all the users not assigned so far
+                List<ApplicationUser> notAssigned = (from n in db.Users where
+                                                     !(from e in ExistingMemberIDs select e).Contains(n.Id)
+                                                        select n).ToList();
+                // return them for assignment
+                foreach (var assignee in notAssigned)
                 {
                     assignees.Add(
-                        new AssignViewModel { Email = assignee.Email,
+                        new AssignViewModel {
+                            ApplicationUserID = assignee.Id,
+                            Email = assignee.Email,
                             Fname = assignee.Fname,
                             Sname = assignee.Sname,
                             Assigned = TEAMASSIGNMENT.UNASSIGNED });

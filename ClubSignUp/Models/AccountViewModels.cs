@@ -121,7 +121,7 @@ namespace ClubSignUp.Models
 
         [Required]
         [Display(Name = "Date Of Birth (dd/mm/yyyy)")]
-        [DataType(DataType.Date,ErrorMessage ="Date of Birth must be in the format dd/mm/yyyy")]
+        [DataType(DataType.DateTime,ErrorMessage ="Date of Birth must be in the format dd/mm/yyyy")]
         public DateTime DOB { get; set; }
 
         [Display(Name = "Mobile Number Irish Only E.G. 086-1234567")]
