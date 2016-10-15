@@ -7,10 +7,10 @@ namespace ClubSignUp.Models
 {
     public enum TEAMASSIGNMENT
     {
-        UNASSIGNED = 0,
-        FIRSTTEAM,
-        SECONDTEAM,
-        RESERVEFIRST,
-        RESERVESECOND
+        Unassigned = 0,
+        FirstTeam,
+        SecondTeam,
+        ReserveFirst,
+        ReserveSecond
     }
 }

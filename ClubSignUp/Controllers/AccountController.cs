@@ -197,7 +197,7 @@ namespace ClubSignUp.Controllers
                     new SelectListItem() { Text = "Goal Keeper", Value = "Goal Keeper" },
                     new SelectListItem() { Text = "Left Back", Value = "Left Back" },
                     new SelectListItem() { Text = "Right Back", Value = "Right Back" },
-                    new SelectListItem() { Text = "Right Back", Value = "Right Back" },
+                    new SelectListItem() { Text = "Centre Half", Value = "Centre Half" },
                     new SelectListItem() { Text = "Centre Mid", Value = "Centre Mid" },
                     new SelectListItem() { Text = "Attacking Mid", Value = "Attacking Mid" },
                     new SelectListItem() { Text = "Defence Mid", Value = "Defence Mid" },

@@ -1,10 +1,6 @@
+using System.Data.Entity.Migrations;
 namespace ClubSignUp.Migrations.ClubModelMigrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-
     internal sealed class Configuration : DbMigrationsConfiguration<ClubSignUp.Models.ClubModels>
     {
         public Configuration()

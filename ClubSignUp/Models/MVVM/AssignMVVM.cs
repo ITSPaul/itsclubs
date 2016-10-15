@@ -11,9 +11,9 @@ namespace ClubSignUp.Models.ViewModels
 
         public List<AssignViewModel> GetAssignees()
         {
-            ClubModels clbModel = new ClubModels();
+            ClubModels clbModel = ClubModels.Create();
             // Find all the members assigned so far
-            List<string> ExistingMemberIDs = clbModel.TeamMembers.Select(m => m.ApplicationUserID).ToList();
+            List<TeamMember> ExistingMemberIDs = clbModel.TeamMembers.ToList();
 
             List<AssignViewModel> assignees = new List<AssignViewModel>();
             // don't hog the application db context
@@ -21,7 +21,7 @@ namespace ClubSignUp.Models.ViewModels
             {
                 // Find all the users not assigned so far
                 List<ApplicationUser> notAssigned = (from n in db.Users where
-                                                     !(from e in ExistingMemberIDs select e).Contains(n.Id)
+                                                     !(from e in ExistingMemberIDs select e.ApplicationUserID).Contains(n.Id)
                                                         select n).ToList();
                 // return them for assignment
                 foreach (var assignee in notAssigned)
@@ -32,23 +32,19 @@ namespace ClubSignUp.Models.ViewModels
                             Email = assignee.Email,
                             Fname = assignee.Fname,
                             Sname = assignee.Sname,
-                            Assigned = TEAMASSIGNMENT.UNASSIGNED });
+                            Assigned = TEAMASSIGNMENT.Unassigned});
                 }
                 return assignees;
             }
     }
-        public void PutAssignees(TEAMASSIGNMENT teamType, List<AssignViewModel> mvvm)
+        public void PutAssignees(TEAMASSIGNMENT teamType, AssignViewModel assignee)
         {
 
             using (ClubModels db = new ClubModels())
             {
-                foreach (var assignee in mvvm)
-                {
                     TeamPanel team = db.Teams.FirstOrDefault(t => t.TeamType == teamType);
                     db.TeamMembers.Add(new TeamMember { TeamId = team.Id, ApplicationUserID = assignee.ApplicationUserID });
- 
-                }
-                db.SaveChanges();
+                    db.SaveChanges();
             }
         }
 

@@ -15,6 +15,7 @@ namespace ClubSignUp.Models
         public int Id { get; set; }
         public TEAMASSIGNMENT TeamType { get; set; }
         public string description { get; set; }
+        public virtual ICollection<TeamMember> members { get; set; }
     }
 
 
@@ -27,8 +28,10 @@ namespace ClubSignUp.Models
         public int TeamId { get; set; }
         [Key]
         [Column(Order = 2)]
+        [ForeignKey("UserMember")]
         public string ApplicationUserID { get; set; }
 
+        public virtual ApplicationUser UserMember { get; set; }
 
     }
 

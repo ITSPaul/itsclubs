@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
 namespace ClubSignUp.Models
 {
+    public enum AttendanceType
+    {
+        Training, TeamMeeting, MatchDay
+    }
+
     [Table("Fixture")]
     public class Fixture
     {
@@ -29,7 +35,18 @@ namespace ClubSignUp.Models
         public string Location;
         public DateTime StartDateTime;
         public DateTime EndDateTime;
-        public ICollection<ApplicationUser> Attendees;
+        public virtual ICollection<TeamMember> Attendees { get; set; }
+    }
+
+
+    [Table("Event")]
+    public class EventAttendance
+    {
+        [Key]
+        public int EventId;
+        public int MemberId;
+        public string Location;
+        public virtual DbSet<TeamMember> Attendees { get; set; }
     }
 
 

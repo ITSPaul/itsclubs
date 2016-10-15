@@ -1,7 +1,27 @@
 ﻿@model IEnumerable<ClubSignUp.Models.ViewModels.AssignViewModel>
+@using ClubSignUp.Models;
 @{
     ViewBag.Title = "Index";
 }
+
+@{ 
+
+    List<SelectListItem> TeamAssignList = new List<SelectListItem>();
+    int i = 0;
+    foreach(var item in Enum.GetValues(typeof(TEAMASSIGNMENT)))
+    {
+        TeamAssignList.Add(new SelectListItem {
+                        Value = (i++).ToString(),
+                        Text = item.ToString() });
+    }
+
+}
+
+@using (Html.BeginForm("PutAssignments", "ClubAdmin", FormMethod.Post,
+                new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
 <h2>Players by Name</h2>
 
 <table class="table">
@@ -29,9 +49,25 @@
             </td>
 
             <td>
-                @Html.DisplayFor(modelItem => item.Assigned)
+                <div class="form-group ">
+                    @Html.LabelFor(m => item.Assigned, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => item.Assigned,
+                       TeamAssignList),
+                    "Unassigned")
+                 
+                    </div>
+                </div>
+
             </td>
              
         </tr>
     }
 </table>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" class="btn btn-default" value="Register" />
+    </div>
+</div>
+
+}
