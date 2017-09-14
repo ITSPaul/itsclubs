@@ -252,13 +252,9 @@
     <Compile Include="Migrations\201609200742400_Signup Date added.Designer.cs">
       <DependentUpon>201609200742400_Signup Date added.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\ClubModelMigrations\201609121048117_Initialise Clubs Context.cs" />
-    <Compile Include="Migrations\ClubModelMigrations\201609121048117_Initialise Clubs Context.Designer.cs">
-      <DependentUpon>201609121048117_Initialise Clubs Context.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ClubModelMigrations\201610101445326_Club Assignment.cs" />
-    <Compile Include="Migrations\ClubModelMigrations\201610101445326_Club Assignment.Designer.cs">
-      <DependentUpon>201610101445326_Club Assignment.cs</DependentUpon>
+    <Compile Include="Migrations\ClubModelMigrations\201610151941317_Initialise Clubs Context.cs" />
+    <Compile Include="Migrations\ClubModelMigrations\201610151941317_Initialise Clubs Context.Designer.cs">
+      <DependentUpon>201610151941317_Initialise Clubs Context.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ClubModelMigrations\Configuration.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -589,11 +585,8 @@
     <EmbeddedResource Include="Migrations\201609200742400_Signup Date added.resx">
       <DependentUpon>201609200742400_Signup Date added.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ClubModelMigrations\201609121048117_Initialise Clubs Context.resx">
-      <DependentUpon>201609121048117_Initialise Clubs Context.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ClubModelMigrations\201610101445326_Club Assignment.resx">
-      <DependentUpon>201610101445326_Club Assignment.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\ClubModelMigrations\201610151941317_Initialise Clubs Context.resx">
+      <DependentUpon>201610151941317_Initialise Clubs Context.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

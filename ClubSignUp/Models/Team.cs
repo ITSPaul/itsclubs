@@ -28,10 +28,9 @@ namespace ClubSignUp.Models
         public int TeamId { get; set; }
         [Key]
         [Column(Order = 2)]
-        [ForeignKey("UserMember")]
         public string ApplicationUserID { get; set; }
 
-        public virtual ApplicationUser UserMember { get; set; }
+       
 
     }
 

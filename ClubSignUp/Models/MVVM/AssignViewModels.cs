@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ClubSignUp.Models.ViewModels
 {
@@ -26,7 +27,11 @@ namespace ClubSignUp.Models.ViewModels
         public string Sname { get; set; }
 
         [Required]
-        [Display(Name = "Team Assigned to")]
+        [Display(Name = "Teams")]
+        public List<SelectListItem> TeamAssignments;
+
+        [Required]
+        [Display(Name = "Assigned")]
         public TEAMASSIGNMENT Assigned { get; set; }
 
     }

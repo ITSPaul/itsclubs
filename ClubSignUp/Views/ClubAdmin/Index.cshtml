@@ -1,73 +1,31 @@
-﻿@model IEnumerable<ClubSignUp.Models.ViewModels.AssignViewModel>
+﻿@model List<ClubSignUp.Models.ViewModels.AssignViewModel>
+@using ClubSignUp.Models.ViewModels
 @using ClubSignUp.Models;
 @{
     ViewBag.Title = "Index";
 }
 
-@{ 
+        @using (Html.BeginForm("PutAssignments", "ClubAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
 
-    List<SelectListItem> TeamAssignList = new List<SelectListItem>();
-    int i = 0;
-    foreach(var item in Enum.GetValues(typeof(TEAMASSIGNMENT)))
+
+    for (int i = 0; i < this.Model.Count(); i++)
     {
-        TeamAssignList.Add(new SelectListItem {
-                        Value = (i++).ToString(),
-                        Text = item.ToString() });
-    }
 
-}
-
-@using (Html.BeginForm("PutAssignments", "ClubAdmin", FormMethod.Post,
-                new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-
-<h2>Players by Name</h2>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Fname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Sname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Assigned)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sname)
-            </td>
-
-            <td>
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor( m => m[i].ApplicationUserID)
+                @Html.HiddenFor(m => m[i].Email)
                 <div class="form-group ">
-                    @Html.LabelFor(m => item.Assigned, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => item.Assigned,
-                       TeamAssignList),
-                    "Unassigned")
-                 
-                    </div>
+                    @Html.TextBoxFor(m => m[i].Fname, new { @readonly = "readonly" })
+                
+                        @Html.TextBoxFor(m => m[i].Sname, new { @readonly = "readonly" })
+                
+                    @Html.EnumDropDownListFor(m => m[i].Assigned)
+
+                                        
                 </div>
+            }
 
-            </td>
-             
-        </tr>
-    }
-</table>
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <input type="submit" class="btn btn-default" value="Register" />
-    </div>
-</div>
+            <input type="submit" class="btn btn-default" value="Assign" />
+        }
 
-}

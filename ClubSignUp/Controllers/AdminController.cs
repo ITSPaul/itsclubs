@@ -50,7 +50,7 @@ namespace ClubSignUp.Controllers
             }
         }
         private ApplicationDbContext db = new ApplicationDbContext();
-        private ClubModels clubs = new ClubModels();
+        private ClubDbContext clubs = new ClubDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 

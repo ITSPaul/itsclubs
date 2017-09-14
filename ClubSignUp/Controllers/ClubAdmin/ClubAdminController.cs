@@ -9,22 +9,32 @@ namespace ClubSignUp.Controllers.ClubAdmin
 {
     public class ClubAdminController : Controller
     {
-        AssignMVVM assignManager = new AssignMVVM();
+        
         // GET: ClubAdmin
         public ActionResult Index()
         {
-
-            
-            return View(assignManager.GetAssignees());
+            return View(AssignMVVM.GetAssignees());
         }
 
         [HttpPost]
-        public void PutAssignments(IEnumerable<ClubSignUp.Models.ViewModels.AssignViewModel> model)
+        public ActionResult PutAssignments(List<AssignViewModel> assignees)
         {
-            foreach (AssignViewModel item in model)
+            foreach (var assignee in assignees)
             {
-                assignManager.PutAssignees(item.Assigned, item);                
+                if (!AssignMVVM.Assigned(assignee))
+                {
+                    if (assignee.Assigned != Models.TEAMASSIGNMENT.Unassigned)
+                    {
+                        AssignMVVM.PutAssignees(assignee);
+                    }
+                }
             }
+                // TeamAssignment assigned in the view using a popdown list
+                //if(!AssignMVVM.Assigned(assignee))
+                //    if(assignee.Assigned != Models.TEAMASSIGNMENT.Unassigned)
+                //    AssignMVVM.PutAssignees( assignee);
+
+            return RedirectToAction("Index");
         }
     }
 }

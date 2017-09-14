@@ -7,13 +7,13 @@ namespace ClubSignUp.Migrations.ClubModelMigrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class ClubAssignment : IMigrationMetadata
+    public sealed partial class InitialiseClubsContext : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ClubAssignment));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialiseClubsContext));
         
         string IMigrationMetadata.Id
         {
-            get { return "201610101445326_Club Assignment"; }
+            get { return "201610151941317_Initialise Clubs Context"; }
         }
         
         string IMigrationMetadata.Source

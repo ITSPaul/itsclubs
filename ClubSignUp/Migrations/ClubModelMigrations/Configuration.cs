@@ -1,7 +1,7 @@
 using System.Data.Entity.Migrations;
 namespace ClubSignUp.Migrations.ClubModelMigrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<ClubSignUp.Models.ClubModels>
+    internal sealed class Configuration : DbMigrationsConfiguration<ClubSignUp.Models.ClubDbContext>
     {
         public Configuration()
         {
@@ -9,7 +9,7 @@ namespace ClubSignUp.Migrations.ClubModelMigrations
             MigrationsDirectory = @"Migrations\ClubModelMigrations";
         }
 
-        protected override void Seed(ClubSignUp.Models.ClubModels context)
+        protected override void Seed(ClubSignUp.Models.ClubDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

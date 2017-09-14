@@ -180,7 +180,7 @@ namespace ClubSignUp.Controllers
         {
             List<SelectListItem> items = new List<SelectListItem>();    
             using (
-            ClubModels db = new ClubModels())
+            ClubDbContext db = new ClubDbContext())
             {
                 var programmes = db.Programmes.ToList();
                 foreach (var item in programmes)
@@ -560,7 +560,8 @@ namespace ClubSignUp.Controllers
         {
             string code = await UserManager.GenerateEmailConfirmationTokenAsync(userID);
             var callbackUrl = Url.Action("ConfirmEmail", "Account",
-               new { userId = userID, code = code }, protocol: Request.Url.Scheme);
+               new { userId = userID, code = code }, 
+               protocol: Request.Url.Scheme);
             await UserManager.SendEmailAsync(userID, subject,
                "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
