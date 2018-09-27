@@ -36,4 +36,31 @@ namespace ClubSignUp.Models.ViewModels
 
     }
 
+    public class StudentProgrammeViewModel
+    {
+
+        [Required]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string Fname { get; set; }
+
+        [Required]
+        [Display(Name = "Surname")]
+        public string Sname { get; set; }
+
+        [Display(Name ="Course")]
+        public string Course { get; set; }
+
+        [Display(Name="Year")]
+        public int Year { get; set; }
+
+        [Display(Name ="Contact Number")]
+        //[RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Entered phone format is not valid.")]
+        [DataType(DataType.PhoneNumber)]
+        public string Contact { get; set; }
+
+    }
 }

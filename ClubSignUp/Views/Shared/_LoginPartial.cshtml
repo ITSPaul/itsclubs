@@ -12,6 +12,10 @@
         @if (User.IsInRole("Admin") || User.IsInRole("ClubAdmin"))
         {
             <li>
+                @Html.ActionLink("Class List", "ViewByClass", "Admin", routeValues: new { area = "" }, htmlAttributes: new { title = "Class Lists" })
+            </li>
+
+            <li>
                 @Html.ActionLink("Player List", "Index", "Admin", routeValues: new { area = "" }, htmlAttributes: new { title = "Player List" })
             </li>
             <li>

@@ -11,6 +11,7 @@ using ClubSignUp.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
+using ClubSignUp.Models.ViewModels;
 
 namespace ClubSignUp.Controllers
 {
@@ -50,7 +51,7 @@ namespace ClubSignUp.Controllers
             }
         }
         private ApplicationDbContext db = new ApplicationDbContext();
-        private ClubDbContext clubs = new ClubDbContext();
+        public ClubDbContext clubs = new ClubDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -78,6 +79,34 @@ namespace ClubSignUp.Controllers
                          select u);
 
             return View(await users.ToListAsync());
+        }
+
+        public ActionResult ViewByClass()
+        {
+
+            var prgs = clubs.Programmes.ToList();
+
+
+            var users = (from u in db.Users
+                                           from ur in u.Roles
+                                           join r in db.Roles on ur.RoleId equals r.Id
+                                           where r.Name.Equals("Student")
+                                           select u).ToList();
+            var user_class =
+                (from u in users
+                 join p in prgs on u.Course equals p.ProgrammeCode
+                 select
+                    new StudentProgrammeViewModel
+                    {
+                        Email = u.Email,
+                        Fname = u.Fname,
+                        Sname = u.Sname,
+                        Contact = u.PhoneNumber,
+                        Course = p.ProgrammeName,
+                        Year = u.Year
+                    }).ToList();
+
+            return View(user_class);
         }
 
         // GET: Admin/Details/5
